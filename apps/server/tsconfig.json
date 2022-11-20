@@ -13,8 +13,8 @@
         "module": "ESNext",
         "paths": {
             "@/*": ["./src/*"],
-            "@homeflix/ncore-parser": ["./packages/ncore-parser/src/index.ts"],
-            "@homeflix/ncore-fetcher": ["./packages/ncore-fetcher/src/index.ts"]
+            "@homeflix/ncore-parser": ["../packages/ncore-parser/src/index.ts"],
+            "@homeflix/ncore-fetcher": ["../packages/ncore-fetcher/src/index.ts"]
         },
     },
     "exclude": [
