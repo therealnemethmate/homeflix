@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "moduleResolution": "node",
+        "lib": ["esnext", "dom"],
+        "skipLibCheck": true,
+        "declaration": true,
+        "target": "ESNext",
+        "outDir": "dist/",
+        "baseUrl": ".",
+        "module": "ESNext",
+        "paths": {
+            "@homeflix/ncore-fetcher": ["./ncore-fetcher/src/index.ts"]
+        },
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "include": [
+        "src/**/*",
+    ],
+}

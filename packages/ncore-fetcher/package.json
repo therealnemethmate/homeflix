@@ -1,0 +1,25 @@
+{
+  "name": "@homeflix/ncore-fetcher",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "typescript": "^4.9.3"
+  }
+}
