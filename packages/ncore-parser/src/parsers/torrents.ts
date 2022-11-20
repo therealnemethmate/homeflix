@@ -1,5 +1,5 @@
 import { appendFile } from 'fs/promises';
-import * as path from 'path'
+import * as path from 'path';
 
 import { getIdFromUrl, getDate } from '../utils';
 import { getDocument } from '../dom';
@@ -7,9 +7,9 @@ import {
     getTorrentsHtml,
     downloadTorrentById,
     TorrentsQueryParam,
-    DownloadTorrentParam
+    DownloadTorrentParam,
 } from '@homeflix/ncore-fetcher';
-import { LinkElement, Torrent, TorrentQueryResult } from '../types';
+import { LinkElement, TorrentQueryResult } from '../types';
 
 export async function getTorrents(sessionId: string, params?: TorrentsQueryParam): Promise<TorrentQueryResult> {
     const torrentsHtml = await getTorrentsHtml(sessionId, params);
@@ -35,14 +35,14 @@ export async function getTorrents(sessionId: string, params?: TorrentsQueryParam
                 createdAt: getDate(createdAtBox?.textContent),
                 peers,
             });
-        })
+        });
         return prev;
-    }, [])
+    }, []);
 
     return { key, torrents };
 }
 
-export async function downloadTorrent(sessionId: string, params: DownloadTorrentParam, downloadPath: string) {
+export async function downloadTorrent(sessionId: string, params: DownloadTorrentParam, downloadPath: string): Promise<void> {
     const { blob, filename } = await downloadTorrentById(sessionId, params);
     const fullPath = path.join(downloadPath, filename);
     const buffer = Buffer.from(await blob.arrayBuffer());

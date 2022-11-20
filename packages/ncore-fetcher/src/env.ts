@@ -4,4 +4,4 @@ const baseUrl = process.env.NCORE_HOST || 'https://ncore.pro';
 export {
     host,
     baseUrl,
-}
+};

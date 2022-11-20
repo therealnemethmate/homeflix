@@ -1,5 +1,5 @@
 import { login, logout } from './services/auth';
-import { getTorrentsHtml, downloadTorrentById }from './services/torrent';
+import { getTorrentsHtml, downloadTorrentById } from './services/torrent';
 import { TorrentsQueryParam, DownloadTorrentParam } from './common/types';
 
 export {
@@ -9,4 +9,4 @@ export {
     getTorrentsHtml,
     TorrentsQueryParam,
     DownloadTorrentParam,
-}
+};

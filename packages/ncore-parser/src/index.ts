@@ -6,4 +6,4 @@ export {
     parseLogout,
     downloadTorrent,
     getTorrents,
-}
+};

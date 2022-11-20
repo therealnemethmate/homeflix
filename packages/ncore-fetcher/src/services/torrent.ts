@@ -48,7 +48,7 @@ export async function downloadTorrentById(sessionId: string, params: DownloadTor
     });
     const filename = res.headers.get('content-disposition')?.match(/"(.*?)"/)?.[1];
 
-    if(!filename) {
+    if (!filename) {
         throw new Error('cannot get filename');
     }
     const blob = await res.blob();

@@ -1,6 +1,6 @@
 export type Credential = { username: string, password: string };
 
-export type LinkElement = { href: string, title: String } & Element;
+export type LinkElement = { href: string, title: string } & Element;
 
 export interface Torrent {
     id: string;

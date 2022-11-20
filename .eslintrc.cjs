@@ -1,9 +1,12 @@
 module.exports = {
     root: true,
     extends: [
-        'eslint:recommended',
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     parserOptions: {
+        sourceType: 'module',
         ecmaVersion: 'latest',
     },
     rules: {
