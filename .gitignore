@@ -53,3 +53,4 @@ package-lock.json
 /local.values.yaml
 /local.values.yml
 /helm/charts/*
+.vscode

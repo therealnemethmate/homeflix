@@ -9,7 +9,7 @@
         "declaration": true,
         "target": "ESNext",
         "outDir": "dist/",
-        "module": "ESNext",
+        "module": "Node16",
         "baseUrl": "."
     },
     "exclude": [

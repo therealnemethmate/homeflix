@@ -8,8 +8,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build:fetcher": "tsc",
     "lint": "eslint ./src --ext .ts"
   },
   "keywords": [],

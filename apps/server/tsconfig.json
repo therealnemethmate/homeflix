@@ -10,11 +10,10 @@
         "target": "ESNext",
         "outDir": "dist/",
         "baseUrl": ".",
-        "module": "ESNext",
+        "module": "Node16",
         "paths": {
             "@/*": ["./src/*"],
-            "@homeflix/ncore-parser": ["../packages/ncore-parser/src/index.ts"],
-            "@homeflix/ncore-fetcher": ["../packages/ncore-fetcher/src/index.ts"]
+            "@homeflix/ncore-parser": ["../../packages/ncore-parser/src/index.ts"]
         },
     },
     "exclude": [

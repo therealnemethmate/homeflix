@@ -9,10 +9,10 @@
         "declaration": true,
         "target": "ESNext",
         "outDir": "dist/",
+        "module": "Node16",
         "baseUrl": ".",
-        "module": "ESNext",
         "paths": {
-            "@homeflix/ncore-fetcher": ["./ncore-fetcher/src/index.ts"]
+            "@homeflix/ncore-fetcher": ["../ncore-fetcher/src/index.ts"]
         },
     },
     "exclude": [

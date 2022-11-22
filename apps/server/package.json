@@ -3,7 +3,6 @@
     "private": true,
     "version": "0.0.0",
     "description": "",
-    "type": "module",
     "scripts": {
       "build": "tsc",
       "watch": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
@@ -13,7 +12,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "@homeflix/ncore-parser": "file:packages/ncore-parser",
+      "@homeflix/ncore-parser": "*",
       "fastify": "^4.10.0"
     },
     "devDependencies": {
