@@ -1,20 +1,17 @@
-FROM node:18 AS builder
+FROM node:18 AS setup
 # Set working directory
 WORKDIR /app
 COPY . .
 
-FROM node:18 AS installer
+FROM node:18 AS builder
 WORKDIR /app
 
 COPY .gitignore .gitignore
-COPY --from=builder /app/ .
+COPY --from=setup /app/ .
 RUN npm i
-
-# Build the project
 RUN npm run build:server
 
 FROM node:18 AS runner
 WORKDIR /app
-
-COPY --from=installer /app .
+COPY --from=builder /app .
 CMD node apps/server/dist/index.js
