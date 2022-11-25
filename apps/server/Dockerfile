@@ -1,5 +1,4 @@
 FROM node:18 AS setup
-# Set working directory
 WORKDIR /app
 COPY . .
 
@@ -15,3 +14,4 @@ FROM node:18 AS runner
 WORKDIR /app
 COPY --from=builder /app .
 CMD node apps/server/dist/index.js
+EXPOSE 3001

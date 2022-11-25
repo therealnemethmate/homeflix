@@ -1,8 +1,39 @@
 version: "3"
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: homeflix_rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=homeflix
+      - RABBITMQ_DEFAULT_PASS=nC3n3udnd3
+    networks:
+      - homeflix_network
+  redis:
+      image: redis:6
+      container_name: homeflix_redis
+      ports:
+        - 6379:6379
+      networks:
+        - homeflix_network
+  mongodb:
+    image: mongo:5
+    container_name: homeflix_mongodb
+    ports:
+      - 27017:27017
+    networks:
+      - homeflix_network
   server:
     container_name: server
+    environment:
+      - SECRET=sUp3r53cR3T$$@@DsAAsDfeownfoie&#nfsna@_3r3f3f$($#1!4f
+      - RABBITMQ_URL=amqp://homeflix:nC3n3udnd3@rabbitmq
+      - DATABASE_URL=mongodb://mongodb
+      - DATABASE_NAME=homeflix
+      - CACHE_URL=redis://redis
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
