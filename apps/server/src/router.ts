@@ -1,8 +1,16 @@
-import { FastifyInstance } from 'fastify';
-import torrentController from './controller/torrent';
-import authController from './controller/auth';
+import { TorrentController } from './controller/torrent';
+import { AuthController } from './controller/auth';
 
-export default async function router(fastify: FastifyInstance) {
-    fastify.register(authController, { prefix: '/auth' });
-    fastify.register(torrentController, { prefix: '/torrent' });
+import { AppInstance } from './app';
+
+export default async function router(app: AppInstance) {
+    app.server.register(
+        () => new AuthController(app),
+        { prefix: '/auth' },
+    );
+
+    app.server.register(
+        () => new TorrentController(app),
+        { prefix: '/torrent' },
+    );
 }

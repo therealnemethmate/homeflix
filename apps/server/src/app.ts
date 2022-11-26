@@ -3,7 +3,6 @@ import { Cache } from '@homeflix/cache';
 
 import fastify, { FastifyInstance } from 'fastify';
 import fastifyJWT from '@fastify/jwt';
-import fp from 'fastify-plugin';
 
 import router from './router';
 import Logger from '@homeflix/logger';
@@ -26,7 +25,6 @@ class App implements AppInstance {
         this._server = fastify({
             logger: !!(process.env.NODE_ENV !== 'development'),
         });
-        this._server.register(router);    
         this._server.register(fastifyJWT, {
             secret: process.env.SECRET,
         });
@@ -37,6 +35,7 @@ class App implements AppInstance {
                 res.send(err);
             }
         });
+        this._server.register(() => router(this));
     }
 
     public async init() {
@@ -53,23 +52,12 @@ class App implements AppInstance {
         }
     }
 
-    public get cache() {
-        return this._cache;
-    }
-    
-    public get server() {
-        return this._server;
-    }
-
-    public get db() {
-        return this._db;
-    }
+    public get cache() { return this._cache; }
+    public get server() { return this._server; }
+    public get db() { return this._db; }
 }
 
-const app = new App(new Logger());
-app.init();
-
 export {
+    App,
     AppInstance,
-    app,
 };

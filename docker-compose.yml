@@ -29,11 +29,13 @@ services:
   server:
     container_name: server
     environment:
-      - SECRET=sUp3r53cR3T$$@@DsAAsDfeownfoie&#nfsna@_3r3f3f$($#1!4f
+      - SECRET=sUp3r53cR3T$$@@DsAAsDfeownfoie&#nfsna@_3r3f3f$($##
       - RABBITMQ_URL=amqp://homeflix:nC3n3udnd3@rabbitmq
       - DATABASE_URL=mongodb://mongodb
       - DATABASE_NAME=homeflix
       - CACHE_URL=redis://redis
+      - CLIENT_NAME=ncore
+      - DOWNLOAD_PATH=/home/Downloads
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
