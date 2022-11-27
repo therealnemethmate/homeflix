@@ -1,5 +1,5 @@
 import { headers } from '../common/constants';
-import { TorrentsQueryParam, SearchTextTarget, DownloadTorrentParam } from '../common/types';
+import { TorrentsQueryParam, SearchTextTarget, Arrangement, DownloadTorrentParam, SearchType } from '../common/types';
 import { baseUrl } from '../env';
 import { clearParams } from '../utils';
 
@@ -8,19 +8,38 @@ export async function getTorrentsHtml(sessionId: string, params: TorrentsQueryPa
         throw new Error('Session id is required!');
     }
 
-    const { sortBy, arrangement, type, selectedTypes, page, searchText } = params;
+    const categories = [
+        'xvid_hun',
+        'xvid',
+        'dvd_hun',
+        'dvd',
+        'dvd9_hun',
+        'dvd9',
+        'hd_hun',
+        'hd',
+        'xvidser_hun',
+        'xvidser',
+        'dvdser_hun',
+        'dvdser',
+        'hdser_hun',
+        'hdser',
+    ];
+
+    const { sortBy, arrangement, page, searchText } = params;
     const ncoreQueryParams: Record<string, string | undefined> = {
         oldal: page?.toString(),
-        miszerint: sortBy,
-        hogyan: arrangement,
-        tipus: type,
-        kivalasztottak_kozott: selectedTypes?.join(', '),
+        miszerint: sortBy || 'seeders',
+        hogyan: arrangement || Arrangement.DESC,
+        tipus: SearchType.SelectedCategories,
+        kivalasztott_tipus: categories?.join(','),
         mire: searchText,
         miben: searchText && SearchTextTarget.NAME,
     };
 
     const queryParams = `?${new URLSearchParams(clearParams(ncoreQueryParams))}`;
     const url = `${baseUrl}/torrents.php${queryParams}`;
+    console.log('url', { url });
+
     const res = await fetch(url, {
         method: 'GET',
         headers: {

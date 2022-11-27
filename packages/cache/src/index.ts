@@ -9,7 +9,7 @@ export class Cache {
     public async setup(url?: string): Promise<RedisClientType> {
         if (this.client) return this.client;
         
-        this._client = createClient({ url: url || 'redis://redis' }); 
+        this._client = createClient({ url: url || 'redis://localhost:6379' }); 
         this._client.on('error', (err) => this.logger.error('Redis Client Error', err));
         await this._client.connect();
         this.logger.info(`Successfully connected to cache: ${url}`);

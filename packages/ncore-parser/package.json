@@ -1,16 +1,16 @@
 {
   "name": "@homeflix/ncore-parser",
   "private": true,
-  "type": "module",
   "files": [
     "dist"
   ],
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/ncore-parser/src/index.js",
+  "types": "dist/ncore-parser/src/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -r ./dist",
     "lint": "eslint ./src --ext .ts"
   },
   "author": "",

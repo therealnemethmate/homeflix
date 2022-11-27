@@ -1,52 +1,31 @@
 version: "3"
 
 services:
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: homeflix_rabbitmq
-    ports:
-      - 15672:15672
-      - 5672:5672
-    environment:
-      - RABBITMQ_DEFAULT_USER=homeflix
-      - RABBITMQ_DEFAULT_PASS=nC3n3udnd3
-    networks:
-      - homeflix_network
   redis:
       image: redis:6
       container_name: homeflix_redis
       ports:
         - 6379:6379
-      networks:
-        - homeflix_network
   mongodb:
-    image: mongo:5
+    image: mongo:6
     container_name: homeflix_mongodb
     ports:
       - 27017:27017
-    networks:
-      - homeflix_network
-  server:
-    container_name: server
+  qbittorrent:
+    image: emmercm/qbittorrent:latest
+    restart: unless-stopped
     environment:
-      - SECRET=sUp3r53cR3T$$@@DsAAsDfeownfoie&#nfsna@_3r3f3f$($##
-      - RABBITMQ_URL=amqp://homeflix:nC3n3udnd3@rabbitmq
-      - DATABASE_URL=mongodb://mongodb
-      - DATABASE_NAME=homeflix
-      - CACHE_URL=redis://redis
-      - CLIENT_NAME=ncore
-      - DOWNLOAD_PATH=/home/Downloads
-    build:
-      context: .
-      dockerfile: ./apps/server/Dockerfile
-    restart: always
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/Budapest
+      - WEBUI_PORT=8080
     ports:
-      - 3001:3001
-    networks:
-      - homeflix_network
-
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-networks:
-  homeflix_network:
-    external: true
+      - 8080:8080
+      - 6881:6881/tcp
+      - 6881:6881/udp
+    volumes:
+      - ./qbittorrent/config:/config
+      - ./qbittorrent/data:/data
+      - ./qbittorrent/downloads:/downloads
+      - ./qbittorrent/monitored:/monitored
+      - ./qbittorrent/incomplete:/incomplete

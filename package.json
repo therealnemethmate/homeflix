@@ -5,9 +5,12 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "clean": "turbo run clean",
     "build": "turbo run build",
+    "build:dev": "turbo run dev build",
     "build:server": "turbo run build --filter=server...",
     "watch": "turbo run watch",
+    "watch:dev:build": "npm run clean && npm run build:dev && npm run watch",
     "lint": "turbo run lint"
   },
   "workspaces": [

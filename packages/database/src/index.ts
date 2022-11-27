@@ -17,7 +17,7 @@ export class Database {
 
     public async setup(url?: string, dbName?: string) {
         if (!this.client) {
-            this.client = new MongoClient(url || 'mongodb://mongodb');
+            this.client = new MongoClient(url || 'mongodb://localhost:27017');
             await this.client.connect();
             this.logger.info('Successfully connected to mongodb');
         }

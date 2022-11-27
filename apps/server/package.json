@@ -5,6 +5,7 @@
     "description": "",
     "scripts": {
         "build": "tsc",
+        "clean": "rm -r ./dist",
         "watch": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
         "lint": "eslint ./src/**/* --ext .ts"
     },
@@ -17,6 +18,7 @@
         "@homeflix/database": "*",
         "@homeflix/logger": "*",
         "@homeflix/ncore-parser": "*",
+        "dotenv": "^16.0.3",
         "fastify": "^4.10.0"
     },
     "devDependencies": {

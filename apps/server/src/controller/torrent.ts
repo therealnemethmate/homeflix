@@ -1,40 +1,53 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AppInstance } from '@/app';
 
-import { getTorrents, downloadTorrent, parseLogin } from '@homeflix/ncore-parser';
+import { downloadTorrent, getTorrents, parseLogin } from '@homeflix/ncore-parser';
 import { models } from '@homeflix/database';
 
-type DownloadTorrentQuery = { torrentId: string, key: string };
+interface DownloadTorrentParams { id: string }
+
+interface GetTorrentsQuery { searchText: string, page: number }
+
+interface UserFromToken { uid: string, username: string }
 
 const SESSION_COOKIE_KEY = 'ncore_session_cookie';
+const DOWNLOAD_KEY = 'ncore_download_key';
+
 export class TorrentController {
-    constructor(private app: AppInstance) {
-        this.app.server.get('/torrents', this.getTorrents);
-        this.app.server.get('/download/:id', this.downloadTorrent);
-        this.app.server.post('/login', this.login);
-    }
+    constructor(private app: AppInstance) {}
 
-    private async login(req: FastifyRequest, res: FastifyReply) {
-        const auth = req.body as models.UserStub;
+    private async login(username: string): Promise<string> {
+        let sessionId = await this.app.cache.client.get(`${SESSION_COOKIE_KEY}_${username}`);
+        if (sessionId) return sessionId;
+
         const usersCollection = this.app.db.getCollection<models.UserSchema>('users');
-        const user = await usersCollection.findOne({ username: auth.username });
-        const { username, password } = user.credentials.find((credential) => credential.name === process.env.CLIENT_NAME);
-        const sessionId = await parseLogin({ username, password });
-        this.app.cache.client.set(SESSION_COOKIE_KEY, sessionId);
+        const user = await usersCollection.findOne({ username });
+        const {
+            username: credentialUserName,
+            password: credentialPassword,
+        } = user.credentials.find((credential) => credential.name === process.env.CLIENT_NAME || 'ncore');
+
+        sessionId = await parseLogin({ username: credentialUserName, password: credentialPassword });
+        await this.app.cache.client.set(`${SESSION_COOKIE_KEY}_${username}`, sessionId);
+        return sessionId;
+    }
+
+    async downloadTorrent(req: FastifyRequest, res: FastifyReply) {
+        const user = req.user as UserFromToken;
+        const torrentParams = req.params as DownloadTorrentParams;
+        const sessionId = await this.login(user.username || 'haha');
+        const key = await this.app.cache.client.get(DOWNLOAD_KEY);
+        await downloadTorrent(sessionId, { torrentId: torrentParams.id, key }, process.env.DOWNLOAD_PATH || '../../qbittorrent/monitored');
         res.header('Content-Type', 'application/json;').send({ result: 'OK' }).code(200);
     }
 
-    private async downloadTorrent(req: FastifyRequest, res: FastifyReply) {
-        const torrentsQuery = req.query as DownloadTorrentQuery;
-        const sessionId = await this.app.cache.client.get(SESSION_COOKIE_KEY);
-        await downloadTorrent(sessionId, torrentsQuery, process.env.DOWNLOAD_PATH);
-        res.header('Content-Type', 'application/json;').send({ result: 'OK' }).code(200);
-    }
-
-    private async getTorrents(req: FastifyRequest, res: FastifyReply) {
-        const torrentsQuery = req.query;
-        const sessionId = req.headers.cookie;
-        const torrents = await getTorrents(sessionId, torrentsQuery);
-        res.header('Content-Type', 'application/json;').send({ torrents }).code(200);
+    async getTorrents(req: FastifyRequest, res: FastifyReply) {
+        const user = req.user as UserFromToken;
+        const torrentsQuery = req.query as GetTorrentsQuery;
+        const sessionId = await this.login(user.username || 'haha');
+        const result = await getTorrents(sessionId, torrentsQuery);
+        console.log('result', { result });
+        await this.app.cache.client.set(DOWNLOAD_KEY, result.key);
+        res.header('Content-Type', 'application/json;').send({ torrents: result.torrents }).code(200);
     }
 }

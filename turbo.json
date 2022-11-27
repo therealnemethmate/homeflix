@@ -3,11 +3,14 @@
       "dev": {
         "cache": false
       },
+      "clean": {
+        "outputs": []
+      },
       "lint": {
         "outputs": []
       },
       "build": {
-        "dependsOn": ["^build"],
+        "dependsOn": ["^build", "clean"],
         "outputs": ["dist/**"]
       },
       "watch": {

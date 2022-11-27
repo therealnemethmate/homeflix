@@ -5,7 +5,10 @@ async function getSessionId() {
     const res = await fetch(`${baseUrl}/`, {
         redirect: 'manual',
         method: 'GET',
-        headers,
+        headers: {
+            ...headers,
+            Connection: 'keep-alive',
+        },
     });
 
     try {
