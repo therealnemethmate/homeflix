@@ -9,8 +9,10 @@
     "build": "turbo run build",
     "build:dev": "turbo run dev build",
     "build:server": "turbo run build --filter=server...",
+    "watch:web": "turbo run watch:web",
     "watch": "turbo run watch",
-    "watch:dev:build": "npm run clean && npm run build:dev && npm run watch",
+    "watch:dev": "turbo run watch dev",
+    "watch:dev:build": "npm run clean && npm run build:dev && npm run watch:dev",
     "lint": "turbo run lint"
   },
   "workspaces": [

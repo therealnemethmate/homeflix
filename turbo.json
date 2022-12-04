@@ -16,6 +16,10 @@
       "watch": {
         "dependsOn": ["^build"],
         "outputs": []
+      },
+      "watch:web": {
+        "dependsOn": [],
+        "outputs": []
       }
     }
   }

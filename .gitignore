@@ -55,4 +55,4 @@ package-lock.json
 /local.values.yml
 /helm/charts/*
 .vscode
-.env
+apps/server/src/.env
