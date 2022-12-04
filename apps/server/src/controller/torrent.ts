@@ -28,7 +28,7 @@ export class TorrentController {
         } = user.credentials.find((credential) => credential.name === process.env.CLIENT_NAME || 'ncore');
 
         sessionId = await parseLogin({ username: credentialUserName, password: credentialPassword });
-        await this.app.cache.client.set(`${SESSION_COOKIE_KEY}_${username}`, sessionId);
+        await this.app.cache.client.set(`${SESSION_COOKIE_KEY}_${username}`, sessionId, { EX: 60 * 60 * 12 });
         return sessionId;
     }
 
