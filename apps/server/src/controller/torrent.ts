@@ -35,6 +35,8 @@ export class TorrentController {
     async downloadTorrent(req: FastifyRequest, res: FastifyReply) {
         const user = req.user as UserFromToken;
         const torrentParams = req.params as DownloadTorrentParams;
+
+        //@TODO remove haha once you find out why the dotenv is failing to work...
         const sessionId = await this.login(user?.username || 'haha');
         const key = await this.app.cache.client.get(DOWNLOAD_KEY);
         await downloadTorrent(sessionId, { torrentId: torrentParams.id, key }, process.env.DOWNLOAD_PATH || '../../qbittorrent/monitored');
@@ -44,6 +46,8 @@ export class TorrentController {
     async getTorrents(req: FastifyRequest, res: FastifyReply) {
         const user = req.user as UserFromToken;
         const torrentsQuery = req.query as GetTorrentsQuery;
+
+        //@TODO remove haha once you find out why the dotenv is failing to work...
         const sessionId = await this.login(user?.username || 'haha');
         const result = await getTorrents(sessionId, torrentsQuery);
         console.log('result', { result });
