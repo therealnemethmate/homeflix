@@ -12,6 +12,7 @@ dist
 dist-ssr
 coverage
 *.local
+qbittorrent
 
 # Optional npm cache directory
 .npm
@@ -54,3 +55,4 @@ package-lock.json
 /local.values.yml
 /helm/charts/*
 .vscode
+apps/server/src/.env

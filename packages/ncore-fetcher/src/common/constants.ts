@@ -8,7 +8,6 @@ const headers: Record<string, string> = {
     'Sec-Fetch-Site': 'same-origin',
     'Sec-Fetch-Mode': 'navigate',
     'Sec-Fetch-Dest': 'document',
-    'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'hu-HU,hu;q=0.8,en-US;q=0.5,en;q=0.3',
 };

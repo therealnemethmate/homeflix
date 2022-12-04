@@ -1,5 +1,4 @@
 FROM node:18 AS setup
-# Set working directory
 WORKDIR /app
 COPY . .
 
@@ -13,5 +12,6 @@ RUN npm run build:server
 
 FROM node:18 AS runner
 WORKDIR /app
-COPY --from=builder /app .
-CMD node apps/server/dist/index.js
+COPY --from=builder /app/dist .
+CMD node apps/server/src/index.js
+EXPOSE 3001

@@ -9,14 +9,10 @@
         "declaration": true,
         "target": "ESNext",
         "outDir": "dist/",
-        "baseUrl": ".",
         "module": "Node16",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"],
-            "@homeflix/logger": ["../../packages/logger/src/index.ts"],
-            "@homeflix/ncore-parser": ["../../packages/ncore-parser/src/index.ts"],
-            "@homeflix/database": ["../../packages/database/src/index.ts"],
-            "@homeflix/cache": ["../../packages/cache/src/index.ts"]
+            "@homeflix/logger": ["../logger/src/index.ts"]
         },
     },
     "exclude": [

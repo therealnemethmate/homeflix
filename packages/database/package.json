@@ -1,0 +1,26 @@
+{
+  "name": "@homeflix/database",
+  "version": "1.0.0",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "main": "dist/database/src/index.js",
+  "types": "dist/database/src/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@homeflix/logger": "*",
+    "mongodb": "^4.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "typescript": "^4.9.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -r ./dist",
+    "lint": "eslint ./src --ext .ts"
+  }
+}

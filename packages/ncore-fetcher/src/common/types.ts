@@ -7,13 +7,16 @@ export enum SearchTextTarget {
     NAME = 'name',
 }
 
+export enum SearchType {
+    SelectedCategories = 'kivalasztottak_kozott',
+}
+
 export interface TorrentsQueryParam {
     sortBy?: string,
     page?: number,
     arrangement?: Arrangement,
-    type?: string,
     selectedTypes?: string[],
-    searchText?: SearchTextTarget,
+    searchText?: string,
 }
 
 export interface DownloadTorrentParam {
