@@ -1,21 +1,29 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AppInstance } from '@/app';
 import { models } from '@homeflix/database';
+import { UserStub } from '@homeflix/database/src/models';
+
+function isString(value: unknown): value is string {
+    return typeof value === 'string';
+}
 
 export class AuthController {
     constructor(private readonly app: AppInstance) {}
 
     async login(req: FastifyRequest, res: FastifyReply) {
-        const auth = req.body as models.UserStub;
+        const auth = (isString(req.body) ? JSON.parse(req.body) : req.body) as UserStub;
+        if (!auth) return res.send('Unauthorized').code(403);
+
         const collection = this.app.db.getCollection<models.UserSchema>('users');
         const user = await collection.findOne({ username: auth.username });
-        if (!user) res.send('Unauthorized').code(403);
+        
+        if (!user) return res.send('Unauthorized').code(403);
         // @TODO: PASSWORD
         const token = this.app.server.jwt.sign(
             { uid: user._id, username: user.username },
             { expiresIn: '12h' },
         );
-        res.header('Content-Type', 'application/json;').send({ token });
+        return res.header('Content-Type', 'application/json;').send({ token });
     }
 
     async signup(req: FastifyRequest, res: FastifyReply) {

@@ -1,5 +1,7 @@
 import Logger from '@homeflix/logger';
 import fastifyJWT from '@fastify/jwt';
+import cors from '@fastify/cors';
+
 import fp from 'fastify-plugin';
 import { App, AppInstance } from './app';
 import { loadEnv } from './env';
@@ -21,6 +23,16 @@ const authPlugin = fp(async (fastify: FastifyInstance) => {
 
 function registerRoutes(app: AppInstance) {
     app.server.register(authPlugin);
+    app.server.register(cors, {
+        origin: (origin, cb) => {
+            const hostname = new URL(origin).hostname;            
+            if (hostname.match(/localhost/g)) {
+                cb(null, true);
+                return;
+            }
+            cb(new Error('Not allowed'), false);
+        },          
+    });
     app.server.register((fastify, options, next) => { 
         router(app);
         next();

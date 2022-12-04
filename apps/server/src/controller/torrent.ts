@@ -35,7 +35,7 @@ export class TorrentController {
     async downloadTorrent(req: FastifyRequest, res: FastifyReply) {
         const user = req.user as UserFromToken;
         const torrentParams = req.params as DownloadTorrentParams;
-        const sessionId = await this.login(user.username || 'haha');
+        const sessionId = await this.login(user?.username || 'haha');
         const key = await this.app.cache.client.get(DOWNLOAD_KEY);
         await downloadTorrent(sessionId, { torrentId: torrentParams.id, key }, process.env.DOWNLOAD_PATH || '../../qbittorrent/monitored');
         res.header('Content-Type', 'application/json;').send({ result: 'OK' }).code(200);
@@ -44,7 +44,7 @@ export class TorrentController {
     async getTorrents(req: FastifyRequest, res: FastifyReply) {
         const user = req.user as UserFromToken;
         const torrentsQuery = req.query as GetTorrentsQuery;
-        const sessionId = await this.login(user.username || 'haha');
+        const sessionId = await this.login(user?.username || 'haha');
         const result = await getTorrents(sessionId, torrentsQuery);
         console.log('result', { result });
         await this.app.cache.client.set(DOWNLOAD_KEY, result.key);

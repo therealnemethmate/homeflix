@@ -7,10 +7,10 @@ export type Credential = {
 }
 
 export interface UserStub {
-    displayName: string;
+    displayName?: string;
     username: string;
     password: string;
-    credentials: Credential[];
+    credentials?: Credential[];
 }
 
 export interface UserSchema extends DocumentSchema, UserStub {}
