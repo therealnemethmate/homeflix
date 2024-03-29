@@ -34,6 +34,7 @@ export async function login(username: string, password: string) {
     if (!res.ok) {
         throw new Error(`Failed to log in with sessionId ${phpSessionId}! ${res.statusText}`);
     }
+
     return phpSessionId;
 }
 
@@ -49,5 +50,6 @@ export async function logout(sessionId: string) {
     if (!res.ok) {
         throw new Error(`Unable to log out with sessionId ${sessionId}! ${res.statusText}`);
     }
+
     return res.ok;
 }

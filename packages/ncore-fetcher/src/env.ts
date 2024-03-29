@@ -1,5 +1,5 @@
-const host = process.env.NCORE_BASE_URL || 'ncore.pro';
-const baseUrl = process.env.NCORE_HOST || 'https://ncore.pro';
+const host = process.env.NCORE_BASE_URL;
+const baseUrl = process.env.NCORE_HOST ?? 'https://ncore.pro';
 
 export {
     host,

@@ -20,14 +20,13 @@ export class AuthController {
         if (!user) return res.send('Unauthorized').code(403);
         // @TODO: PASSWORD
         const token = this.app.server.jwt.sign(
-            { uid: user._id, username: user.username },
+            { uid: user._id },
             { expiresIn: '12h' },
         );
         return res.header('Content-Type', 'application/json;').send({ token });
     }
 
     async signup(req: FastifyRequest, res: FastifyReply) {
-        console.log('this', { dis: Object.keys(this) });
         const user = req.body as models.UserSchema;
         const collection = this.app.db.getCollection<models.UserSchema>('users');
         const foundUser = await collection.findOne({ username: user.username });

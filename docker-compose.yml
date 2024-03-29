@@ -11,21 +11,31 @@ services:
     container_name: homeflix_mongodb
     ports:
       - 27017:27017
-  qbittorrent:
-    image: emmercm/qbittorrent:latest
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
     restart: unless-stopped
+    container_name: transmission
     environment:
       - PUID=1001
       - PGID=1001
       - TZ=Europe/Budapest
-      - WEBUI_PORT=8080
     ports:
-      - 8080:8080
-      - 6881:6881/tcp
-      - 6881:6881/udp
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+
     volumes:
-      - ./qbittorrent/config:/config
-      - ./qbittorrent/data:/data
-      - ./qbittorrent/downloads:/downloads
-      - ./qbittorrent/monitored:/monitored
-      - ./qbittorrent/incomplete:/incomplete
+      - ./client/config:/config
+      - ./client/downloads:/downloads
+      - ./client/watch:/watch
+  plex:
+    container_name: plex-server
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    environment:
+      - PLEX_CLAIM=claim-o_xEFebRhCuebxdxv7Zv
+    network_mode: host
+    volumes:
+      - ./plex/config:/config
+      - ./plex/transcode:/transcode
+      - ./client/downloads:/data

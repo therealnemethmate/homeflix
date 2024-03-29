@@ -28,8 +28,6 @@ class App implements AppInstance {
     }
 
     public async init() {
-        console.log('init');
-
         if (!this._db) {
             this._db = new Database(this.logger);
             this._logger.debug(`Connecting to mongodb with url ${process.env.DATABASE_URL}`);
