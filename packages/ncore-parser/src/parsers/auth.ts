@@ -3,17 +3,20 @@ import { Credential } from '../types';
 
 /**
  * Logs in and gets session id, which should be used in further communications
+ * 
  * @param {{ username: string, password: string}} credentials 
  * @returns `sessionId`
  */
 export async function parseLogin(credentials: Credential) {
     if (!credentials) throw new Error('"credentials" is mandatory');
-    if (!credentials?.username) {
+    if (!credentials.username) {
         throw new Error('"username" is mandatory');
     }
-    if (!credentials?.password) {
+
+    if (!credentials.password) {
         throw new Error('"password" is mandatory');
     }
+    
     return login(credentials.username, credentials.password);
 }
 

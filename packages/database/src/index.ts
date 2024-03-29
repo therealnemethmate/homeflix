@@ -1,4 +1,4 @@
-import { Db, MongoClient } from 'mongodb';
+import { Db, MongoClient, ObjectId } from 'mongodb';
 import * as models from './models';
 import Logger from '@homeflix/logger';
 
@@ -34,4 +34,4 @@ export class Database {
     }
 }
 
-export { models };
+export { models, ObjectId };

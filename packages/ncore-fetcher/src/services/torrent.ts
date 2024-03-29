@@ -38,7 +38,6 @@ export async function getTorrentsHtml(sessionId: string, params: TorrentsQueryPa
 
     const queryParams = `?${new URLSearchParams(clearParams(ncoreQueryParams))}`;
     const url = `${baseUrl}/torrents.php${queryParams}`;
-    console.log('url', { url });
 
     const res = await fetch(url, {
         method: 'GET',
