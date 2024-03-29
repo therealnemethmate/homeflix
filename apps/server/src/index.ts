@@ -58,7 +58,7 @@ function registerRoutes(app: AppInstance) {
         next();
     });
 
-    const port = Number(process.env.PORT) || 3001;
+    const port = Number(process.env.HOMEFLIX_SERVER_PORT) ?? 8080;
     app.server.listen({ port });
     app.server.log.debug(`Listening on port ${port}`);
 }
