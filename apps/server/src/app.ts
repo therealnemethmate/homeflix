@@ -1,8 +1,11 @@
 import { Database } from '@homeflix/database';
 import { Cache } from '@homeflix/cache';
+import dotenv from 'dotenv';
 
 import fastify, { FastifyInstance } from 'fastify';
 import Logger from '@homeflix/logger';
+
+dotenv.config({ override: true });
 
 interface AppInstance {
     init(): Promise<void>;
@@ -30,12 +33,12 @@ class App implements AppInstance {
     public async init() {
         if (!this._db) {
             this._db = new Database(this.logger);
-            this._logger.debug(`Connecting to mongodb with url ${process.env.DATABASE_URL}`);
-            await this._db.setup(process.env.DATABASE_URL, process.env.DATABASE_NAME);
+            this._logger.debug(`Connecting to mongodb with url ${process.env.HOMEFLIX_DATABASE_URL}`);
+            await this._db.setup(process.env.HOMEFLIX_DATABASE_URL, process.env.HOMEFLIX_DATABASE_NAME);
         }
         if (!this._cache) {
             this._cache = new Cache(this.logger);
-            await this._cache.setup(process.env.CACHE_URL);
+            await this._cache.setup(process.env.HOMEFLIX_CACHE_URL);
         }
         if (!this._server) {
             await this.initServer();

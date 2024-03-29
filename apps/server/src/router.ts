@@ -2,19 +2,6 @@ import { TorrentController } from './controller/torrent';
 import { AuthController } from './controller/auth';
 
 import { AppInstance } from './app';
-import { JWT } from '@fastify/jwt';
-
-// adding jwt property to req
-// authenticate property to FastifyInstance
-declare module 'fastify' {
-    interface FastifyRequest {
-      jwt: JWT
-    }
-    export interface FastifyInstance {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      authenticate: any
-    }
-}
 
 export default function router(app: AppInstance) {
     app.server.register(

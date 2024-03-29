@@ -55,7 +55,8 @@ package-lock.json
 /local.values.yml
 /helm/charts/*
 .vscode
-apps/server/src/.env
+apps/server/.env
+apps/web/.env
 .env
 client
 plex

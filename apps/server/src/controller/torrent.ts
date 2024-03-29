@@ -22,7 +22,7 @@ export class TorrentController {
         const user = await usersCollection.findOne({ username });
         if (!user) throw new Error(`User ${username} not found!`);
 
-        const clientCredentials = user.credentials.find((credential) => credential.name === process.env.CLIENT_NAME);
+        const clientCredentials = user.credentials.find((credential) => credential.name === process.env.HOMEFLIX_CLIENT_NAME);
         if (!clientCredentials) throw new Error('Client credentials not found!');
         const {
             username: credentialUserName,
@@ -40,7 +40,7 @@ export class TorrentController {
 
         const sessionId = await this.login(user?.username);
         const key = await this.app.cache.client.get(DOWNLOAD_CACHE_KEY);
-        await downloadTorrent(sessionId, { torrentId: torrentParams.id, key }, process.env.DOWNLOAD_PATH);
+        await downloadTorrent(sessionId, { torrentId: torrentParams.id, key }, process.env.HOMEFLIX_DOWNLOAD_PATH);
         res.header('Content-Type', 'application/json;').send({ result: 'OK' }).code(200);
     }
 
