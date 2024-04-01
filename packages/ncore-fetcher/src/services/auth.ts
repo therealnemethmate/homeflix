@@ -2,7 +2,7 @@ import { headers } from '../common/constants';
 import { baseUrl } from '../env';
 
 async function getSessionId() {
-    const res = await fetch(`${baseUrl}/`, {
+    const res = await fetch(new URL(baseUrl), {
         redirect: 'manual',
         method: 'GET',
         headers,
@@ -17,7 +17,8 @@ async function getSessionId() {
 
 export async function login(username: string, password: string) {
     const phpSessionId = await getSessionId();
-    const res = await fetch(`${baseUrl}/login.php`, {
+    const url = new URL('/login.php', baseUrl);
+    const res = await fetch(url, {
         method: 'POST',
         headers: {
             ...headers,
@@ -39,7 +40,8 @@ export async function login(username: string, password: string) {
 }
 
 export async function logout(sessionId: string) {
-    const res = await fetch(`${baseUrl}/exit.php?q=${sessionId}`, {
+    const url = new URL(`/exit.php?q=${sessionId}`, baseUrl);
+    const res = await fetch(url, {
         method: 'POST',
         headers: {
             ...headers,

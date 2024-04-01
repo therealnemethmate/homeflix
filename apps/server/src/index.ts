@@ -1,22 +1,31 @@
-import fastifyJWT from '@fastify/jwt';
+import fastifyJWT, { JWT } from '@fastify/jwt';
 import Logger from '@homeflix/logger';
 import cors from '@fastify/cors';
-import dotenv from 'dotenv';
 
 import fp from 'fastify-plugin';
 import { App, AppInstance } from './app';
 import router from './router';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { ObjectId } from 'bson';
-
-dotenv.config({ override: true });
+import { ObjectId } from '@homeflix/database';
 
 interface SessionToken { uid: string }
+
+// adding jwt property to req
+// authenticate property to FastifyInstance
+declare module 'fastify' {
+    interface FastifyRequest {
+      jwt: JWT
+    }
+    export interface FastifyInstance {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      authenticate: any
+    }
+}
 
 function registerRoutes(app: AppInstance) {
     const authPlugin = fp(async (fastify: FastifyInstance) => {
         fastify.register(fastifyJWT, {
-            secret: process.env.SECRET,
+            secret: process.env.HOMEFLIX_SECRET,
         });
     
         fastify.decorate('authenticate', async function(req: FastifyRequest, res: FastifyReply) {
@@ -35,12 +44,8 @@ function registerRoutes(app: AppInstance) {
     
     app.server.register(cors, {
         origin: (origin, cb) => {
-            const hostname = new URL(origin).hostname;            
-            if (hostname.match(/localhost/g)) {
-                cb(null, true);
-                return;
-            }
-            cb(new Error('Not allowed'), false);
+            cb(null, true);
+            return;
         },          
     });
     app.server.register(authPlugin);
@@ -49,8 +54,8 @@ function registerRoutes(app: AppInstance) {
         next();
     });
 
-    const port = Number(process.env.PORT) || 3001;
-    app.server.listen({ port });
+    const port = Number(process.env.HOMEFLIX_SERVER_PORT) ?? 8080;
+    app.server.listen({ host: '0.0.0.0', port });
     app.server.log.debug(`Listening on port ${port}`);
 }
 
