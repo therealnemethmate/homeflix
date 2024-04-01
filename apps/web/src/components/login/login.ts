@@ -1,5 +1,7 @@
+const baseURL = `${import.meta.env.VITE_HOMEFLIX_SERVER_HOST ?? 'http://localhost'}:${import.meta.env.VITE_HOMEFLIX_SERVER_PORT ?? '8080'}`;
+
 export async function login(username: string, password: string) {
-    const url = `${import.meta.env.VITE_HOMEFLIX_SERVER_HOST}:${import.meta.env.VITE_HOMEFLIX_SERVER_PORT}/login`;
+    const url = `${baseURL}/login`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const result = await fetch(url, {

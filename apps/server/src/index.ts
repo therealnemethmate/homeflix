@@ -44,12 +44,8 @@ function registerRoutes(app: AppInstance) {
     
     app.server.register(cors, {
         origin: (origin, cb) => {
-            const hostname = new URL(origin).hostname;            
-            if (hostname.match(/localhost/g)) {
-                cb(null, true);
-                return;
-            }
-            cb(new Error('Not allowed'), false);
+            cb(null, true);
+            return;
         },          
     });
     app.server.register(authPlugin);
@@ -59,7 +55,7 @@ function registerRoutes(app: AppInstance) {
     });
 
     const port = Number(process.env.HOMEFLIX_SERVER_PORT) ?? 8080;
-    app.server.listen({ port });
+    app.server.listen({ host: '0.0.0.0', port });
     app.server.log.debug(`Listening on port ${port}`);
 }
 

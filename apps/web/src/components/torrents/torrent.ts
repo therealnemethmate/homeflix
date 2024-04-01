@@ -1,8 +1,9 @@
 import { Torrent } from '../../common/interfaces';
 
+const baseURL = `${import.meta.env.VITE_HOMEFLIX_SERVER_HOST ?? 'http://localhost'}:${import.meta.env.VITE_HOMEFLIX_SERVER_PORT ?? '8080'}`;
+
 export async function fetchTorrents(token: string, searchText: string) {
-    const url
-        = `${import.meta.env.VITE_HOMEFLIX_SERVER_HOST}:${import.meta.env.VITE_HOMEFLIX_SERVER_PORT}/torrents?searchText=${searchText}`;
+    const url = `${baseURL}/torrents?searchText=${searchText}`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${token}`);
@@ -15,8 +16,7 @@ export async function fetchTorrents(token: string, searchText: string) {
 }
 
 export async function downloadTorrent(token: string, id: string) {
-    const url
-        = `${import.meta.env.VITE_HOMEFLIX_SERVER_HOST}:${import.meta.env.VITE_HOMEFLIX_SERVER_PORT}/download/${id}`;
+    const url = `${baseURL}/download/${id}`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${token}`);
