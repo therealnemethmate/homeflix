@@ -10,7 +10,7 @@
         "outputs": []
       },
       "build": {
-        "dependsOn": ["^build", "clean"],
+        "dependsOn": ["^build"],
         "outputs": ["dist/**"]
       },
       "watch": {

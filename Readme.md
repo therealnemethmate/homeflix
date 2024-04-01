@@ -21,6 +21,8 @@ sudo ufw allow ${HOMEFLIX_SERVER_PORT}/tcp
 sudo ufw allow ${HOMEFLIX_WEB_PORT}/tcp
 ```
 
+### Set your .env in the apps/web directory
+
 ### Start docker containers
 
 ```bash
