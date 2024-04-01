@@ -1,4 +1,4 @@
-import { appendFile } from 'fs/promises';
+import { appendFile, mkdir } from 'fs/promises';
 import * as path from 'path';
 
 import { getIdFromUrl, getDate } from '../utils';
@@ -46,5 +46,6 @@ export async function downloadTorrent(sessionId: string, params: DownloadTorrent
     const { blob, filename } = await downloadTorrentById(sessionId, params);
     const fullPath = path.join(downloadPath, filename);
     const buffer = Buffer.from(await blob.arrayBuffer());
+    await mkdir(downloadPath, { recursive: true });
     await appendFile(fullPath, buffer);
 }
